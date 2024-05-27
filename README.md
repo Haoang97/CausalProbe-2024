@@ -26,7 +26,7 @@ Our proposed CausalProbe 2024 consists of two sub-datasets: CausalProbe 2024 Eas
 For user convenience, we also upload the (pre-propossed) other benchmarks used in this work to the folder `/benchmarks/`, including [COPA](https://people.ict.usc.edu/~gordon/copa.html), [e-CARE](https://github.com/Waste-Wood/e-CARE), and [CausalNet](https://anonymous.4open.science/r/causal-reasoning-0B6E/). For ease of use, we also convert these three benchmarks into `.json` or `.jsonl` format.
 
 ## Retrieval document
-The retrieval document used in this work is a general knowledge Q&A dataset ([Link](https://huggingface.co/datasets/MuskumPillerum/General-Knowledge)). You can download it by (firstly, `pip install -U huggingface_hub`)
+The retrieval document used in this work is a general knowledge Q&A dataset ([Link](https://huggingface.co/datasets/MuskumPillerum/General-Knowledge)). You can download it by (firstly, make sure the `huggingface_hub` package is installed; if not, run `pip install -U huggingface_hub`)
 ```
 huggingface-cli download --repo-type dataset --resume-download MuskumPillerum/General-Knowledge --local-dir 'Your local dir' --local-dir-use-symlinks False
 ```
