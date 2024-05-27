@@ -20,6 +20,25 @@ conda env create -f environment.yml
 ```
 
 # Data
-Our proposed CausalProbe 2024 consists of two sub-datasets: CausalProbe 2024 Easy (CausalProbe-E) and CausalProbe 2024 Hard (CausalProbe-H). We upload them to the folder `/benchmarks/CausalProbe_2024/`.
+## Causal Q&A benchmarks
+Our proposed CausalProbe 2024 consists of two sub-datasets: CausalProbe 2024 Easy (CausalProbe-E) and CausalProbe 2024 Hard (CausalProbe-H), which are formatted in `.json` files. We upload them to the folder `/benchmarks/CausalProbe_2024/`.
 
-For user convenience, we also upload the (pre-propossed) other benchmarks used in this work to the folder `/benchmarks/`, including [COPA](https://people.ict.usc.edu/~gordon/copa.html), [e-CARE](https://github.com/Waste-Wood/e-CARE), and [CausalNet](https://anonymous.4open.science/r/causal-reasoning-0B6E/).
+For user convenience, we also upload the (pre-propossed) other benchmarks used in this work to the folder `/benchmarks/`, including [COPA](https://people.ict.usc.edu/~gordon/copa.html), [e-CARE](https://github.com/Waste-Wood/e-CARE), and [CausalNet](https://anonymous.4open.science/r/causal-reasoning-0B6E/). For ease of use, we also convert these three benchmarks into `.json` or `.jsonl` format.
+
+## Retrieval document
+The retrieval document used in this work is a general knowledge Q&A dataset ([Link](https://huggingface.co/datasets/MuskumPillerum/General-Knowledge)). You can download it by (firstly, `pip install -U huggingface_hub`)
+```
+huggingface-cli download --repo-type dataset --resume-download MuskumPillerum/General-Knowledge --local-dir 'Your local dir' --local-dir-use-symlinks False
+```
+Each data item of general knowledge Q&A is a question-answer pair, like:
+```
+{"id": 1,
+"Question": "What is Artificial Intelligence?",
+"Answer": "Artificial Intelligence refers to the development of computer systems that can perform tasks that would typically require human intelligence, such as visual perception, speech recognition, decision-making, and language translation.\\n"
+}
+```
+As a retrieval knowledge base, we only use the answer part of general knowledge Q&A dataset. The answer part covers most of the knowledge in the question part, so the information loss is negligible.
+
+Due to the network limitation, we choose a local and small knowledge base as our retrieval document. In the future, we will further explore to use search engines (like Wikipedia) as external knowledge bases.
+
+# Evaluation
