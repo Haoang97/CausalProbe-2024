@@ -41,4 +41,5 @@ As a retrieval knowledge base, we only use the answer part of general knowledge 
 
 Due to the network limitation, we choose a local and small knowledge base as our retrieval document. In the future, we will further explore to use search engines (like Wikipedia) as external knowledge bases.
 
-# Evaluation
+# Inference
+Our code mainly follows the realization of vanilla RAG in [Self-RAG](https://github.com/AkariAsai/self-rag/tree/main). We use [Contriever-MSMARCO](https://github.com/facebookresearch/contriever) as the retrieval module.
