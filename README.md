@@ -96,7 +96,7 @@ done
 ```
 Then, with the original retrieval knowledge base, its embeddings, and a retriever, we can do RAG. You need to retrieve a knowledge base the first time you use it. In the following, you can set the `--load_retrieved_docs=True` to use the saved retrieved results.
 ```
-python rag.py \
+CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
     --model_name  [LLM dir or name] \
     --input_file [benchmark dir] \
     --passages [retrieval knowledge base dir] \
@@ -111,6 +111,29 @@ python rag.py \
     --max_new_tokens 50 \
     --metric multiple_choice_match \
     --prompt_name "prompt_mcqa_retrieval_[benchmark_name]" \
+    --task qa \
+    --result_fp_base ./result_logs/ \
+    --api_key [your API key if using closed-source models] \
+    --api_base [your API's base url if necessary]
+```
+## G^2-Reasoner
+Like RAG, you can run the G^2-Reasoner with the following command
+```
+CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
+    --model_name  [LLM dir or name] \
+    --input_file [benchmark dir] \
+    --passages [retrieval knowledge base dir] \
+    --passages_embeddings [retrieval knowledge embeddings dir] \
+    --passages_source [knowledge embeddings name] \
+    --retriever_path [retriever dir] \
+    --mode retrieval \
+    --n_docs 20 \
+    --top_n 1 \
+    --load_retrieved_docs False \
+    --batch_size 8 \
+    --max_new_tokens 50 \
+    --metric multiple_choice_match \
+    --prompt_name "prompt_mcqa_g2reasoner_[benchmark_name]" \
     --task qa \
     --result_fp_base ./result_logs/ \
     --api_key [your API key if using closed-source models] \
