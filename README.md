@@ -64,7 +64,7 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
     --api_base [your API's base url if necessary]
 ```
 
-## CoT
+## Chain-of-Thought (CoT)
 ```
 CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
     --model_name [LLM dir or name] \
@@ -80,7 +80,7 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
     --api_base [your API's base url if necessary]
 ```
 
-## Retrieval-augmented Generation
+## Retrieval-augmented Generation (RAG)
 First, we should construct a vector database using the`faiss` package. Given a retrieval knowledge base, we generate its embeddings following the Self-RAG repository.
 ```
 for i in 0
@@ -94,4 +94,25 @@ do
     --num_shards 1 > ./nohup.my_embeddings.$i 2>&1 &
 done
 ```
-Then,
+Then, with the original retrieval knowledge base, its embeddings, and a retriever, we can do RAG. You need to retrieve a knowledge base the first time you use it. In the following, you can set the `--load_retrieved_docs=True` to use the saved retrieved results.
+```
+python rag.py \
+    --model_name  [LLM dir or name] \
+    --input_file [benchmark dir] \
+    --passages [retrieval knowledge base dir] \
+    --passages_embeddings [retrieval knowledge embeddings dir] \
+    --passages_source [knowledge embeddings name] \
+    --retriever_path [retriever dir] \
+    --mode retrieval \
+    --n_docs 20 \
+    --top_n 1 \
+    --load_retrieved_docs False \
+    --batch_size 8 \
+    --max_new_tokens 50 \
+    --metric multiple_choice_match \
+    --prompt_name "prompt_mcqa_retrieval_[benchmark_name]" \
+    --task qa \
+    --result_fp_base ./result_logs/ \
+    --api_key [your API key if using closed-source models] \
+    --api_base [your API's base url if necessary]
+```
