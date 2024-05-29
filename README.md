@@ -8,6 +8,10 @@ This work explores the current state of causal reasoning capabilities in large l
 # Content
 - [Installation](#installation)
 - [Data](#data)
+  + [Causal Q&A benchmarks](--)
+  + [Retrieval document](--)
+- [Inference](#inference)
+
 
 # Installation
 Install dependent Python libraries by running the command below.
@@ -43,3 +47,51 @@ Due to the network limitation, we choose a local and small knowledge base as our
 
 # Inference
 Our code mainly follows the realization of vanilla RAG in [Self-RAG](https://github.com/AkariAsai/self-rag/tree/main). We use [Contriever-MSMARCO](https://github.com/facebookresearch/contriever) as the retrieval module.
+## Vanilla inference
+The `gpu_ids` mainly depends on the LLM's size and batch size. The value of `prompt_name` depends on the used benchmark and reasoning method. The full list of prompts is shown in `prompts.py` and you can just choose your needed prompt from this file.
+```
+CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
+    --model_name [LLM dir or name] \
+    --input_file [benchmark dir] \
+    --mode vanilla \
+    --batch_size 16 \
+    --max_new_tokens 50 \
+    --metric multiple_choice_match \
+    --prompt_name "prompt_mcqa_[benchmark_name]" \
+    --task qa \
+    --result_fp_base ./result_logs/ \
+    --api_key [your API key if using closed-source models] \
+    --api_base [your API's base url if necessary]
+```
+
+## CoT
+```
+CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
+    --model_name [LLM dir or name] \
+    --input_file [benchmark dir] \
+    --mode vanilla \
+    --batch_size 16 \
+    --max_new_tokens 128 \
+    --metric multiple_choice_match \
+    --prompt_name "prompt_mcqa_cot_[benchmark_name]" \
+    --task qa \
+    --result_fp_base ./result_logs/ \
+    --api_key [your API key if using closed-source models] \
+    --api_base [your API's base url if necessary]
+```
+
+## Retrieval-augmented Generation
+First, we should construct a vector database using the`faiss` package. Given a retrieval knowledge base, we generate its embeddings following the Self-RAG repository.
+```
+for i in 0
+do
+  export CUDA_VISIBLE_DEVICES=$i
+  python generate_embeddings.py \
+    --model_name_or_path [contriever-msmarco or your embedding model dir] \
+    --output_dir [your output dir] \
+    --passages [your retrieval knowledge base dir] \
+    --shard_id $i \
+    --num_shards 1 > ./nohup.my_embeddings.$i 2>&1 &
+done
+```
+Then,
