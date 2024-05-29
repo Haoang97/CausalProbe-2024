@@ -139,3 +139,11 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
     --api_key [your API key if using closed-source models] \
     --api_base [your API's base url if necessary]
 ```
+# Reference
+[1]  Akari Asai, Zeqiu Wu, Yizhong Wang, Avirup Sil, and Hannaneh Hajishirzi. SELF-RAG: Learning to Retrieve, Generate and Critique through self-reflection. ICLR 2024
+[2] G. Izacard, M. Caron, L. Hosseini, S. Riedel, P. Bojanowski, A. Joulin, E. Grave Unsupervised Dense Information Retrieval with Contrastive Learning
+[3] Melissa Roemmele, Cosmin Adrian Bejan, Andrew S. Gordon. Choice of Plausible Alternatives: An Evaluation of Commonsense Causal Reasoning. AAAI 2011.
+[4] Li Du, Xiao Ding, Kai Xiong, Ting Liu, Bing Qin. e-CARE: a New Dataset for Exploring Explainable Causal Reasoning. ACL 2022.
+[5] Ashwani S, Hegde K, Mannuru N R, et al. Cause and Effect: Can Large Language Models Truly Understand Causality?[J]. arXiv preprint arXiv:2402.18139, 2024.
+# Contact
+Due to the double-blind requirement, we do not provide our e-mails during submission.
