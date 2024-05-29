@@ -8,7 +8,7 @@ This work explores the current state of causal reasoning capabilities in large l
 # Content
 - [Installation](#installation)
 - [Data](#data)
-  + [Causal Q&A benchmarks](--)
+  + [Causal Q&A benchmarks](#Causal Q&A benchmarks)
   + [Retrieval document](--)
 - [Inference](#inference)
   + [Vanilla inference](--)
