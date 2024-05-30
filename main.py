@@ -15,10 +15,6 @@ import backoff
 import openai
 from openai.error import APIError, Timeout, APIConnectionError
 from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
-from accelerate import init_empty_weights,infer_auto_device_map,load_checkpoint_in_model,dispatch_model
-
-ORG_KEY="YOUR_ORG_KEY"
-#os.environ["CUDA_VISIBLE_DEVICES"] = "3" 
 
 @backoff.on_exception(backoff.expo, openai.error.RateLimitError)
 def completions_with_backoff(**kwargs):
@@ -56,10 +52,6 @@ def call_model_instructgpt(prompt, model, max_tokens=50):
 
 
 def call_model(prompts, model, tokenizer, max_new_tokens=50):
-    # using vllm package:
-    #sampling_params = SamplingParams(
-    #    temperature=0.8, top_p=0.95, max_tokens=max_new_tokens)
-    #preds = model.generate(prompts, sampling_params)
     model_name = model.name_or_path.split("/")[-1]
     tokens = tokenizer.batch_encode_plus(prompts, return_tensors="pt", padding=True).to("cuda")
     with torch.no_grad():
@@ -74,7 +66,6 @@ def call_model(prompts, model, tokenizer, max_new_tokens=50):
             preds = model.generate(**tokens, max_new_tokens=max_new_tokens,
                                 do_sample=False, pad_token_id=tokenizer.pad_token_id)
     preds = tokenizer.batch_decode(preds[:, tokens.input_ids.shape[1]:], skip_special_tokens=True)
-    #preds = [pred.outputs[0].text.split("\n\n")[0] for pred in preds]
     postprocessed_preds = [postprocess_output(pred) for pred in preds]
     return postprocessed_preds, preds
 
@@ -150,12 +141,8 @@ def main():
 
     if isOpenAI is False:
         if args.dtype is not None:
-            #model = LLM(model=args.model_name, download_dir=args.download_dir, dtype=args.dtype,
-            #            tensor_parallel_size=args.world_size,)
             model = AutoModelForCausalLM.from_pretrained(args.model_name, device_map="auto", torch_dtype=args.dtype).eval()
         else:
-            #model = LLM(model=args.model_name, download_dir=args.download_dir,
-            #            tensor_parallel_size=args.world_size,)
             model = AutoModelForCausalLM.from_pretrained(args.model_name, device_map="auto", trust_remote_code=True).eval()
         if args.model_name.split("/")[-1].split("-")[0] == "Qwen":
             tokenizer = AutoTokenizer.from_pretrained(args.model_name, padding_side="left", trust_remote_code=True, pad_token="<|endoftext|>")
@@ -179,26 +166,7 @@ def main():
             retriever = Retriever(args)
             retriever.setup_retriever()
             retrieved_results = retriever.search_document(input_data, args.n_docs)
-        '''
-        if args.passages_source == "general_knowledge":
-            retrieved_results = [
-                {
-                    "id": line["id"],
-                    "passages": "\n\n".join([item["passage"] for item in line["passages"][:args.top_n]])
-                }
-                for line in retrieved_results
-            ]
-
-            id2retrieval = {}
-            for id, item in enumerate(retrieved_results):
-                if input_data[id]["id"] == item["id"]:
-                    id2retrieval[input_data[id]["qid"]] = item["passages"]
-
-            for item in input_data:
-                item["paragraph"] = id2retrieval[item["id"]]
-         
-        elif args.passages_source == "wikipedia":
-        '''
+        
         id2retrieval = {}
         for item in retrieved_results:
             if args.passages_source == "wikipedia":
@@ -208,37 +176,10 @@ def main():
             else:
                 NotImplementedError
         for id, item in enumerate(input_data):
-            #retrieved_results = id2retrieval[id if "id" not in item else item["id"]]
-            #evidences = ["[{}] ".format(
-            #    i+1) + ctx["title"]+"\n" + ctx["text"] for i, ctx in enumerate(retrieved_results)]
             evidences = id2retrieval[item["id" if "id" in item else "index"]]
             item["paragraph"] = "\n".join(evidences)
-        #else:
-        #    NotImplementedError
-        
+
         del retrieved_results
-        '''
-        if args.passages is not None:
-            retrieval_data = load_file(args.passages)
-            id2retrieval = {}
-            for id, item in enumerate(retrieval_data):
-                if "id" not in item:
-                    #id2retrieval[id] = item["ctxs"][:args.top_n]
-                    id2retrieval[id] = item["Question"] + "\n" + item["Answer"]
-                else:
-                    id2retrieval[item["id"]] = item["Question"] + "\n" + item["Answer"]
-            for id, item in enumerate(input_data):
-                retrieval_result = id2retrieval[id if "id" not in item else item["id"]]
-                evidences = ["[{}] ".format(
-                    i+1) + ctx["title"]+"\n" + ctx["text"] for i, ctx in enumerate(retrieval_result)]
-                item["paragraph"] = "\n".join(evidences)
-        else:
-            for id, item in enumerate(input_data):
-                retrieval_result = item["ctxs"][:args.top_n]
-                evidences = ["[{}] ".format(
-                    i+1) + ctx["title"]+"\n" + ctx["text"] for i, ctx in enumerate(retrieval_result)]
-                item["paragraph"] = "\n".join(evidences)
-        '''
 
     for item in input_data:
         if "golds" not in item:
