@@ -23,10 +23,6 @@ Install dependent Python libraries by running the command below.
 ```
 pip install -r requirements.txt
 ```
-You can also create a conda environment by running the command below.
-```
-conda env create -f environment.yml
-```
 
 # Data
 ## Causal Q&A benchmarks
