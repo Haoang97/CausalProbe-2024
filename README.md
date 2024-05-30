@@ -95,7 +95,7 @@ do
     --num_shards 1 > ./nohup.my_embeddings.$i 2>&1 &
 done
 ```
-Then, with the original retrieval knowledge base, its embeddings, and a retriever, we can do RAG. You need to retrieve a knowledge base the first time you use it. In the following, you can set the `--load_retrieved_docs=True` to use the saved retrieved results. We have uploaded the retrieved results [here](https://drive.google.com/drive/folders/17jddGlufaBjzS-mO-WBPR7sgqJS94lYz?usp=sharing). You can download them and move them to the folder`./retrieved_docs/`. We retrieve and save the Top-20 related knowledge items for each  question.
+Then, with the original retrieval knowledge base, its embeddings, and a retriever, we can do RAG. You need to retrieve a knowledge base the first time you use it. In the following, you can set the `--load_retrieved_docs=True` to use the saved retrieved results. We have uploaded the retrieved results in the folder `retrieved_docs`. Since the maximum files allowed to upload to Github is 25Mb, we only provide two small retrieved result files. After review, we will upload all files to Google Drive.  You can download them and move them to the folder`./retrieved_docs/`. We retrieve and save the Top-20 related knowledge items for each  question.
 ```
 CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
     --model_name  [LLM dir or name] \
