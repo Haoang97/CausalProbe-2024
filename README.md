@@ -97,7 +97,7 @@ done
 ```
 Then, with the original retrieval knowledge base, its embeddings, and a retriever, we can do RAG. You need to retrieve a knowledge base the first time you use it. In the following, you can set the `--load_retrieved_docs=True` to use the saved retrieved results. We have uploaded the retrieved results in the folder `retrieved_docs`. Since the maximum files allowed to upload to Github is 25Mb, we only provide two small retrieved result files. Due to the double blind review requirement, we will upload all retrieved result files to Google Drive after the review stage.  You can download them and move them to the folder`./retrieved_docs/`. We retrieve and save the Top-20 related knowledge items for each  question.
 ```
-CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
+CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
     --model_name  [LLM dir or name] \
     --input_file [benchmark dir] \
     --passages [retrieval knowledge base dir] \
@@ -120,7 +120,7 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
 ## G^2-Reasoner
 Like RAG, you can run the G^2-Reasoner with the following command
 ```
-CUDA_VISIBLE_DEVICES=[gpu_ids] python rag.py \
+CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
     --model_name  [LLM dir or name] \
     --input_file [benchmark dir] \
     --passages [retrieval knowledge base dir] \
