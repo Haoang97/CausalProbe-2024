@@ -30,11 +30,11 @@ def calculate_metrics(data):
 
     return exact_match, all_exact_match, precision, recall, f1, invalid_ids
 
-# 读取JSON文件
+# read .json files
 print("Please input a json foramt file that saves results:")
 data = load_jsonlines(input())
 
-# 统一健
+# unify the keys
 for item in data:
     if "golds" not in item:
         if "answers" in item:
@@ -51,10 +51,10 @@ for item in data:
         if "index" in item:
             item["id"] = item["index"]
 
-# 计算指标
+# compute metrics
 exact_match, all_exact_match, precision, recall, f1, invalid_ids = calculate_metrics(data)
 
-# 打印结果
+# print results
 print(f"Exact Match: {exact_match:.4f}")
 print(f"All Exact Match: {all_exact_match:.4f}")
 print(f"Precision: {precision:.4f}")
