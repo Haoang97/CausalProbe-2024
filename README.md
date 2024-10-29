@@ -17,6 +17,7 @@ This work explores the current state of causal reasoning capabilities in large l
    * [G^2-Reasoner](#g2-reasoner)
 - [Reference](#reference)
 - [Contact](#contact)
+- [Citation](#citation)
 
 # Installation
 Install dependent Python libraries by running the command below.
@@ -152,4 +153,14 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
 [5] Ashwani S, Hegde K, Mannuru N R, et al. Cause and Effect: Can Large Language Models Truly Understand Causality?[J]. arXiv preprint arXiv:2402.18139, 2024.
 
 # Contact
-Due to the double-blind requirement, we do not provide our e-mails during submission.
+Please feel free to contact [haoangchi618@gmail.com](haoangchi618@gmail.com).
+
+# Citation
+'''
+@inproceedings{chi2022meta,
+  title={Unveiling Causal Reasoning in Large Language Models: Reality or Mirage?},
+  author={Haoang, Chi and He, Li and Wenjing, Yang and Feng, Liu and Long, Lan and Xiaoguang, Ren and Tongliang, Liu and Bo, Han},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2024}
+}
+'''
