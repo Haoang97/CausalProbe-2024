@@ -156,11 +156,11 @@ CUDA_VISIBLE_DEVICES=[gpu_ids] python main.py \
 Please feel free to contact [haoangchi618@gmail.com](haoangchi618@gmail.com).
 
 # Citation
-'''
-@inproceedings{chi2022meta,
+```
+@inproceedings{chi2024unveiling,
   title={Unveiling Causal Reasoning in Large Language Models: Reality or Mirage?},
   author={Haoang, Chi and He, Li and Wenjing, Yang and Feng, Liu and Long, Lan and Xiaoguang, Ren and Tongliang, Liu and Bo, Han},
   booktitle={Advances in Neural Information Processing Systems},
   year={2024}
 }
-'''
+```
