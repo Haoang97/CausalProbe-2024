@@ -27,7 +27,7 @@ pip install -r requirements.txt
 
 # Data
 ## Causal Q&A benchmarks
-Our proposed CausalProbe 2024 consists of two sub-datasets: CausalProbe 2024 Easy (CausalProbe-E) and CausalProbe 2024 Hard (CausalProbe-H), which are formatted in `.json` files. We upload them to the folder `/benchmarks/CausalProbe_2024/`.
+Our proposed [CausalProbe 2024](https://github.com/Haoang97/CausalProbe-2024/tree/main/benchmarks/CausalProbe2024) consists of two sub-datasets: CausalProbe 2024 Easy (CausalProbe-E), CausalProbe 2024 Hard (CausalProbe-H) and CausalProbe 2024 Multiple (CausalProb-M), which are formatted in `.json` files. We upload them to the folder `/benchmarks/CausalProbe_2024/`.
 
 For user convenience, we also upload the (pre-propossed) other benchmarks used in this work to the folder `/benchmarks/`, including [COPA](https://people.ict.usc.edu/~gordon/copa.html), [e-CARE](https://github.com/Waste-Wood/e-CARE), and [CausalNet](https://anonymous.4open.science/r/causal-reasoning-0B6E/). For ease of use, we also convert these three benchmarks into `.json` or `.jsonl` format.
 
